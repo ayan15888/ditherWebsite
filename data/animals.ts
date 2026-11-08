@@ -57,7 +57,7 @@ export const ANIMALS: AnimalData[] = [
   { id: 'bat', name: 'Bat', emoji: '🦇', category: 'Insects & Birds', color: '#5B3A7A', signature: 'Wing drape & sonar hover', personality: 'Mystic cave flyer' },
   { id: 'crocodile', name: 'Crocodile', emoji: '🐊', category: 'Ocean', color: '#3C8D40', signature: 'River float & sudden jaw snap', personality: 'Patient prehistoric scout' },
   { id: 'jellyfish', name: 'Jellyfish', emoji: '🪼', category: 'Ocean', color: '#D36BC4', signature: 'Bioluminescent pulse & drift', personality: 'Ethereal floating jewel' },
-  { id: 'peacock', name: 'Peacock', emoji: '🦚', category: 'Insects & Birds', color: '#0E8A8A', signature: 'Majestic fan tail shimmer', personality: 'Splendid feather artist' },
+  { id: 'peacock', name: 'Peacock', emoji: '🦚', category: 'Insects & Birds', color: '#0284C7', signature: 'Majestic fan tail shimmer', personality: 'Splendid feather artist' },
   { id: 'redpanda', name: 'Red Panda', emoji: '🐾', category: 'Savanna', color: '#C2410C', signature: 'Fluffy tail ripple & two-paw stand', personality: 'Adorable tree acrobat' },
 ];
 

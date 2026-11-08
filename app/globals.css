@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #0B0F19;
-  --foreground: #F3F4F6;
+  --background: #FCFAF6;
+  --foreground: #1F2937;
 }
 
 body {
@@ -13,17 +13,295 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
-/* Custom retro dot background */
-.dither-bg-pattern {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-  background-size: 16px 16px;
+/* Cute ambient background aura */
+.ambient-peach {
+  background: radial-gradient(circle at 50% 0%, rgba(255, 237, 224, 0.7) 0%, rgba(252, 250, 246, 0) 70%);
 }
 
-.glow-orange {
-  box-shadow: 0 0 35px -5px rgba(255, 90, 31, 0.3);
+.ambient-lavender {
+  background: radial-gradient(circle at 100% 50%, rgba(243, 237, 255, 0.6) 0%, rgba(252, 250, 246, 0) 60%);
 }
 
-.glow-blue {
-  box-shadow: 0 0 35px -5px rgba(59, 130, 246, 0.3);
+/* Soft floating squircle cards */
+.cute-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(243, 244, 246, 0.9);
+  border-radius: 1.75rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.cute-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 224, 214, 0.8);
+  box-shadow: 0 20px 40px -12px rgba(255, 107, 53, 0.08), 0 8px 16px -4px rgba(0, 0, 0, 0.02);
+}
+
+/* Pill buttons */
+.cute-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  padding: 0.5rem 1.125rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(229, 231, 235, 0.8);
+  background: #FFFFFF;
+  color: #374151;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cute-pill-btn:hover {
+  background: #FFF8F5;
+  border-color: #FED7AA;
+  color: #EA580C;
+  transform: translateY(-1px);
+}
+
+.cute-pill-btn:active {
+  transform: scale(0.97);
+}
+
+.cute-pill-primary {
+  background: #FF6B35;
+  border: 1px solid #FF6B35;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px -2px rgba(255, 107, 53, 0.4);
+}
+
+.cute-pill-primary:hover {
+  background: #F2541B;
+  border-color: #F2541B;
+  box-shadow: 0 6px 20px -2px rgba(255, 107, 53, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Custom rounded scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #E5E7EB;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D1D5DB;
+}
+
+/* Marching walk bob for loading screen parade */
+@keyframes walkBob {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(-2deg);
+  }
+  75% {
+    transform: translateY(-3px) rotate(2deg);
+  }
+}
+
+.animate-walk-bob {
+  animation: walkBob 0.8s ease-in-out infinite;
+}
+
+/* Dither diagonal stripe pattern for progress bars */
+.dither-stripe-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.25) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  background-size: 32px 32px;
+  animation: stripeMove 1.2s linear infinite;
+}
+
+@keyframes stripeMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 32px 0;
+  }
+}
+
+/* Retro pixel grid backdrop */
+.retro-pixel-grid {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 107, 53, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 107, 53, 0.06) 1px, transparent 1px);
+}
+
+/* Animated colorful cloud backdrop */
+.colorful-cloud-backdrop {
+  background-size: 160% 160%;
+  animation: cloudGradientShift 14s ease-in-out infinite alternate;
+}
+
+@keyframes cloudGradientShift {
+  0% {
+    background-position: 0% 30%;
+  }
+  50% {
+    background-position: 100% 70%;
+  }
+  100% {
+    background-position: 0% 30%;
+  }
+}
+
+/* Ambient floating side effect */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1.5deg);
+  }
+}
+
+.animate-float-gentle {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+/* Twinkle star side effect */
+@keyframes starTwinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(15deg);
+  }
+}
+
+.animate-star-twinkle {
+  animation: starTwinkle 2.5s ease-in-out infinite;
+}
+
+/* Particle explosion burst side effect */
+@keyframes burstOut {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.4) rotate(0deg);
+  }
+  60% {
+    opacity: 0.95;
+    transform: translate(var(--tw-burst-x, 0px), var(--tw-burst-y, -30px)) scale(1.15) rotate(var(--tw-burst-rot, 20deg));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tw-burst-x, 0px), calc(var(--tw-burst-y, -30px) + 20px)) scale(0.6) rotate(var(--tw-burst-rot, 40deg));
+  }
+}
+
+.animate-particle-burst {
+  animation: burstOut 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Speech bubble pop side effect */
+@keyframes popBubble {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(6px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.06) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-pop-bubble {
+  animation: popBubble 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* ============================================================== */
+/* HAND-DRAWN SKETCH DESIGN STYLES */
+/* ============================================================== */
+
+/* Authentic casual handwritten note font */
+.font-handwritten {
+  font-family: 'Caveat', 'Chalkboard SE', 'Comic Sans MS', 'Segoe Print', cursive, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* Organic hand-drawn sketchbook wobbly border */
+.hand-drawn-border {
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+.hand-drawn-border-alt {
+  border-radius: 20px 255px 20px 255px/255px 20px 255px 20px;
+}
+
+.hand-drawn-border-pill {
+  border-radius: 955px 45px 925px 45px/45px 925px 45px 955px;
+}
+
+/* Hand-drawn marker highlighter effect */
+.marker-highlight {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  z-index: 0;
+}
+
+.marker-highlight::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  bottom: 2px;
+  top: 48%;
+  background: rgba(254, 215, 170, 0.6); /* warm peach/orange marker */
+  transform: rotate(-0.8deg) skewX(-3deg);
+  border-radius: 3px;
+  z-index: -1;
+}
+
+.marker-highlight-yellow::before {
+  background: rgba(254, 240, 138, 0.75); /* yellow highlighter */
+}
+
+.marker-highlight-pink::before {
+  background: rgba(251, 207, 232, 0.7); /* soft pink highlighter */
+}
+
+.marker-highlight-sky::before {
+  background: rgba(186, 230, 253, 0.7); /* soft sky highlighter */
+}
+
+/* Washi tape strip decoration */
+.washi-tape {
+  position: relative;
+}
+
+.washi-tape::after {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1.5deg);
+  width: 75px;
+  height: 18px;
+  background: rgba(254, 215, 170, 0.75);
+  border-left: 2px dashed rgba(249, 115, 22, 0.35);
+  border-right: 2px dashed rgba(249, 115, 22, 0.35);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  z-index: 10;
+}

@@ -2,7 +2,10 @@
 
 import React, { useState } from 'react';
 import { ANIMALS, AnimalData } from '../data/animals';
-import { Search, Copy, Check, Sparkles, Filter } from 'lucide-react';
+import DitherCanvas, { DitherDotShape } from './DitherCanvas';
+import CodeGeneratorModal from './CodeGenerator';
+import { Search, Copy, Check, Sparkles, Sliders, Dices } from 'lucide-react';
+import { sounds } from '../utils/sound';
 
 const CATEGORIES = ['All', 'Forest', 'Pets', 'Savanna', 'Ocean', 'Insects & Birds'] as const;
 
@@ -10,22 +13,44 @@ export default function AnimalsGallery() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<typeof CATEGORIES[number]>('All');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [galleryDotShape, setGalleryDotShape] = useState<DitherDotShape>('square');
+  const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
+  
+  // Modal state for Flutter Code Generator popup
+  const [modalAnimalId, setModalAnimalId] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openGenerator = (animalId: string) => {
+    sounds.playBoing();
+    setModalAnimalId(animalId);
+    setIsModalOpen(true);
+  };
+
+  const pickSurprisePet = () => {
+    const randomIndex = Math.floor(Math.random() * ANIMALS.length);
+    const surprise = ANIMALS[randomIndex];
+    sounds.playSpecialMove();
+    setModalAnimalId(surprise.id);
+    setIsModalOpen(true);
+  };
 
   const filtered = ANIMALS.filter((a) => {
     const matchCat = category === 'All' || a.category === category;
     const q = search.toLowerCase();
     const matchSearch =
       a.name.toLowerCase().includes(q) ||
+      a.id.toLowerCase().includes(q) ||
       a.signature.toLowerCase().includes(q) ||
       a.personality.toLowerCase().includes(q);
     return matchCat && matchSearch;
   });
 
   const copySnippet = (animal: AnimalData) => {
+    sounds.playSparkle();
     const code = `DitherPet.${animal.id}(
   mood: PetMood.happy,
   theme: PetTheme.solid,
-  dot: PetDot.round,
+  dot: PetDot.${galleryDotShape},
 )`;
     navigator.clipboard.writeText(code);
     setCopiedId(animal.id);
@@ -33,34 +58,63 @@ export default function AnimalsGallery() {
   };
 
   return (
-    <section id="gallery" className="py-20 bg-dither-dark border-b border-dither-border">
+    <section id="gallery" className="py-16 md:py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-mono">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Chibi Animal Presets</span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 border border-orange-100 text-orange-600 text-xs font-semibold mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
+              <span>Chibi Companion Presets</span>
+              <span className="text-neutral-300">•</span>
+              <span className="font-handwritten text-orange-600 text-sm font-bold">~ready to drop in~</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900">
+              Meet All{' '}
+              <span className="relative inline-block px-1">
+                <span className="relative z-10 text-orange-600">50</span>
+                {/* Hand-drawn sketch circle around 50 */}
+                <svg
+                  className="absolute -inset-1.5 w-[calc(100%+12px)] h-[calc(100%+12px)] text-orange-400 pointer-events-none -rotate-3 overflow-visible"
+                  viewBox="0 0 54 46"
+                  fill="none"
+                >
+                  <path
+                    d="M 27 5 C 14 5 5 15 5 25 C 5 36 15 42 29 42 C 43 42 49 33 49 23 C 49 11 38 4 25 6"
+                    stroke="currentColor"
+                    strokeWidth="2.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>{' '}
+              Pets
+            </h2>
+            <p className="text-sm text-neutral-500 mt-1 max-w-xl">
+              Each animal has its own custom vector paths, cute blinks, and poke shockwaves. <span className="marker-highlight-yellow font-semibold text-neutral-900 px-1">Click any animal</span> to open the Flutter Code Generator & live theme settings!
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
-            Meet All 50 Animals
-          </h2>
-          <p className="text-gray-400 text-sm sm:text-base">
-            Every animal has its own custom vector path layers, signature action curves, personality animations, and poke shockwaves.
-          </p>
+
+
         </div>
 
-        {/* Filter & Search Bar */}
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-8 bg-dither-card/60 p-4 rounded-2xl border border-dither-border">
+        {/* Filter and Search Bar (Soft pill design) */}
+        <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between mb-8 bg-white/70 backdrop-blur-md p-2 rounded-full border border-neutral-200/60 shadow-sm">
           {/* Category Tabs */}
-          <div className="flex flex-wrap gap-1.5 w-full md:w-auto">
+          <div className="flex flex-wrap gap-1">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setCategory(cat)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+                onClick={() => {
+                  sounds.playClick();
+                  setCategory(cat);
+                }}
+                onMouseEnter={() => sounds.playHover()}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   category === cat
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
-                    : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+                    ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/20'
+                    : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100/60'
                 }`}
               >
                 {cat}
@@ -68,99 +122,137 @@ export default function AnimalsGallery() {
             ))}
           </div>
 
-          {/* Search Input */}
-          <div className="relative w-full md:w-72">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search 50 animals..."
-              className="w-full pl-9 pr-4 py-2 bg-dither-dark border border-dither-border rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors font-mono"
-            />
+          {/* Search Input & Surprise Button with Hand-drawn Doodle Note */}
+          <div className="flex items-center gap-2 w-full md:w-auto">
+            <span className="hidden xl:inline font-handwritten text-orange-600 font-bold text-xs rotate-[-2deg] select-none">
+              can&apos;t pick? roll one! ↷
+            </span>
+            <button
+              onClick={pickSurprisePet}
+              onMouseEnter={() => sounds.playHover()}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-semibold shadow-xs hover:shadow-md hover:scale-105 active:scale-95 transition-all shrink-0"
+              title="Pick a random surprise pet & open generator!"
+            >
+              <Dices className="w-3.5 h-3.5" />
+              <span>Surprise Pet 🎲</span>
+            </button>
+
+            <div className="relative flex-1 md:w-56">
+              <Search className="w-4 h-4 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search 50 pets..."
+                className="w-full pl-9 pr-4 py-1.5 bg-neutral-50/70 border border-neutral-200/60 rounded-full text-xs text-neutral-800 placeholder-neutral-400 focus:outline-none focus:bg-white focus:border-orange-300 transition-all"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Count Indicator */}
-        <div className="text-xs text-gray-400 font-mono mb-6">
-          Showing {filtered.length} of {ANIMALS.length} animals
-        </div>
-
-        {/* Animal Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {filtered.map((animal, idx) => {
+        {/* The 50 Animal Cards Grid — 5 per row always */}
+        <div className="grid grid-cols-5 gap-5">
+          {filtered.map((animal) => {
             const isCopied = copiedId === animal.id;
+            const isCardHovered = hoveredCardId === animal.id;
             return (
               <div
                 key={animal.id}
-                className="group relative flex flex-col justify-between p-4 rounded-2xl bg-dither-card border border-dither-border hover:border-gray-600 transition-all hover:-translate-y-1 hover:shadow-xl"
+                onClick={() => openGenerator(animal.id)}
+                onMouseEnter={() => {
+                  setHoveredCardId(animal.id);
+                  sounds.playHover();
+                }}
+                onMouseLeave={() => setHoveredCardId(null)}
+                className="group relative flex flex-col justify-between p-4 bg-white/90 rounded-[2rem] border border-orange-100/70 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_16px_36px_rgba(255,107,53,0.12)] hover:-translate-y-1.5 transition-all duration-300 cursor-pointer"
+                title={`Click to open Flutter Code Generator for ${animal.name}`}
               >
                 <div>
-                  {/* Top Bar inside card */}
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10">
-                      #{String(idx + 1).padStart(2, '0')}
-                    </span>
+                  {/* Top Header: Badge & Category */}
+                  <div className="flex items-center justify-between pb-1 text-[11px] font-medium text-neutral-400">
+                    <span>{animal.category}</span>
                     <span
-                      className="w-3.5 h-3.5 rounded-full border border-white/20"
+                      className="w-2.5 h-2.5 rounded-full"
                       style={{ backgroundColor: animal.color }}
-                      title={`Theme Color: ${animal.color}`}
+                      title={`Color: ${animal.color}`}
                     />
                   </div>
 
-                  {/* Character Icon / Emoji */}
-                  <div className="w-16 h-16 mx-auto my-3 rounded-2xl bg-dither-dark border border-dither-border flex items-center justify-center text-3xl group-hover:scale-110 transition-transform shadow-inner">
-                    {animal.emoji}
+                  {/* Soft organic circular halo for Mascot Canvas */}
+                  <div className="relative my-3 py-4 flex items-center justify-center rounded-[1.5rem] bg-gradient-to-b from-orange-50/40 to-transparent transition-colors overflow-hidden">
+                    <DitherCanvas
+                      animalId={animal.id}
+                      size={145}
+                      cells={48}
+                      dotShape={galleryDotShape}
+                      color={animal.color}
+                      interactive={true}
+                      animated={true}
+                      animateOnHoverOnly={true}
+                      isHovered={isCardHovered}
+                      showFace={true}
+                      className="mx-auto transition-transform group-hover:scale-105"
+                    />
                   </div>
 
-                  {/* Animal Info */}
-                  <div className="text-center">
-                    <h3 className="font-bold text-white text-base tracking-wide group-hover:text-orange-400 transition-colors">
-                      {animal.name}
-                    </h3>
-                    <p className="text-[11px] text-gray-400 line-clamp-1 mt-0.5 font-medium">
-                      {animal.signature}
-                    </p>
-                    <p className="text-[10px] text-gray-500 italic mt-0.5">
-                      &quot;{animal.personality}&quot;
-                    </p>
+                  {/* Pet Name */}
+                  <div className="text-center pt-1">
+                    <div className="flex items-center justify-center gap-1.5">
+                      <span className="text-base">{animal.emoji}</span>
+                      <h3 className="font-bold text-sm text-neutral-900 group-hover:text-orange-600 transition-colors">
+                        {animal.name}
+                      </h3>
+                    </div>
                   </div>
                 </div>
 
-                {/* Bottom Action: Copy Code */}
-                <button
-                  onClick={() => copySnippet(animal)}
-                  className={`mt-4 w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors border ${
-                    isCopied
-                      ? 'bg-green-500/20 text-green-400 border-green-500/40'
-                      : 'bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 hover:text-white'
-                  }`}
-                  title="Copy Flutter Code Snippet"
-                >
-                  {isCopied ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-green-400" />
-                      <span>Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5 text-gray-400" />
-                      <span>Copy Dart</span>
-                    </>
-                  )}
-                </button>
+                {/* Bottom Actions */}
+                <div className="mt-4 flex items-center gap-2">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openGenerator(animal.id);
+                    }}
+                    className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 font-mono text-xs font-semibold rounded-2xl bg-orange-50 hover:bg-orange-500 text-orange-600 hover:text-white border border-orange-200/80 hover:border-orange-500 transition-all shadow-xs"
+                    title="Open Flutter Code Generator & Settings"
+                  >
+                    <Sliders className="w-4 h-4" />
+                    <span>Customize</span>
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      copySnippet(animal);
+                    }}
+                    className="p-2.5 rounded-2xl bg-neutral-50 hover:bg-neutral-100 text-neutral-500 hover:text-neutral-800 border border-neutral-200/60 transition-all shrink-0"
+                    title="Quick copy 1-line Flutter snippet"
+                  >
+                    {isCopied ? (
+                      <Check className="w-4 h-4 text-emerald-600" />
+                    ) : (
+                      <Copy className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
               </div>
             );
           })}
         </div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-16 text-gray-500 font-mono text-sm">
-            No matching animals found for &quot;{search}&quot;.
+          <div className="text-center py-16 text-neutral-400 text-sm">
+            No cute pets found for &quot;{search}&quot;.
           </div>
         )}
       </div>
+
+      {/* Pop-up Modal for Flutter Code Generator */}
+      <CodeGeneratorModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        animalId={modalAnimalId || 'cat'}
+        defaultDotShape={galleryDotShape}
+      />
     </section>
   );
 }
-

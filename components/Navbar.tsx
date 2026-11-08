@@ -2,77 +2,75 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Github, Package, Copy, Check, Sparkles } from 'lucide-react';
+import { Package, Volume2, VolumeX } from 'lucide-react';
+import { sounds } from '../utils/sound';
 
-export default function Navbar() {
-  const [copied, setCopied] = useState(false);
+interface NavbarProps {
+  onOpenLoading?: () => void;
+}
 
-  const copyCommand = () => {
-    navigator.clipboard.writeText('flutter pub add dither_animals');
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+export default function Navbar({ onOpenLoading }: NavbarProps = {}) {
+  const [soundOn, setSoundOn] = useState(false);
+
+  const toggleSound = () => {
+    const newState = sounds.toggle();
+    setSoundOn(newState);
   };
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-md bg-dither-dark/80 border-b border-dither-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header className="sticky top-3 z-50 px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto h-14 px-4 sm:px-5 rounded-full bg-white/80 backdrop-blur-xl border border-orange-100/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex items-center justify-between transition-all">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-dither-orange to-dither-purple flex items-center justify-center text-white text-lg shadow-lg group-hover:scale-105 transition-transform">
-            🦉
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-orange-500 to-amber-400 text-white font-mono font-bold text-xs flex items-center justify-center shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform">
+            🐾
           </div>
-          <div>
-            <div className="font-bold text-white text-base tracking-wide flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5">
+            <span className="font-bold text-sm tracking-tight text-neutral-800 group-hover:text-orange-500 transition-colors">
               dither_animals
-              <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">
-                v2.0.2
-              </span>
-            </div>
-            <p className="text-[11px] text-gray-400 font-mono -mt-0.5">Flutter Bayer Dither Widgets</p>
+            </span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-orange-50 text-orange-600 font-semibold border border-orange-200/40">
+              v2.0.2
+            </span>
           </div>
         </Link>
 
-        {/* Nav Links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
-          <a href="#gallery" className="hover:text-white transition-colors">50 Animals</a>
-          <a href="#visualizer" className="hover:text-white transition-colors">Matrix Styles</a>
-          <a href="#generator" className="hover:text-white transition-colors">Code Generator</a>
-          <a href="#recipes" className="hover:text-white transition-colors">UI Recipes</a>
-        </nav>
-
         {/* Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          {/* Retro Tamagotchi Sound FX Toggle Pill */}
           <button
-            onClick={copyCommand}
-            className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-dither-card border border-dither-border hover:border-gray-600 text-xs font-mono text-gray-300 transition-colors"
-            title="Click to copy pub add command"
+            onClick={toggleSound}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+              soundOn
+                ? 'bg-amber-50 text-amber-700 border-amber-200 shadow-xs'
+                : 'bg-neutral-50 text-neutral-400 border-neutral-200/60 hover:text-neutral-700'
+            }`}
+            title={soundOn ? 'Sound FX Enabled (Tamagotchi Mode)' : 'Click to enable 8-bit Sound FX'}
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5 text-gray-400" />}
-            <span>flutter pub add dither_animals</span>
+            {soundOn ? (
+              <>
+                <Volume2 className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
+                <span className="hidden sm:inline text-[11px] font-mono">8-Bit Sound ON</span>
+              </>
+            ) : (
+              <>
+                <VolumeX className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline text-[11px] font-mono">Sound: OFF</span>
+              </>
+            )}
           </button>
 
           <a
             href="https://pub.dev/packages/dither_animals"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600/20 border border-blue-500/40 text-blue-400 hover:bg-blue-600/30 text-xs font-semibold transition-all"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full bg-orange-500 hover:bg-orange-600 text-white shadow-sm shadow-orange-500/25 transition-all hover:scale-105"
           >
             <Package className="w-3.5 h-3.5" />
             <span>pub.dev</span>
-          </a>
-
-          <a
-            href="https://github.com/ayan15888/dither_animals"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white text-xs font-semibold transition-all"
-          >
-            <Github className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">GitHub</span>
           </a>
         </div>
       </div>
     </header>
   );
 }
-
