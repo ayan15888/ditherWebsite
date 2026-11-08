@@ -30,7 +30,7 @@ export default function Navbar({ onOpenLoading }: NavbarProps = {}) {
               dither_animals
             </span>
             <span className="text-[9px] sm:text-[10px] font-mono px-1.5 sm:px-2 py-0.5 rounded-full bg-orange-50 text-orange-600 font-semibold border border-orange-200/40">
-              v2.0.2
+              v2.1.0
             </span>
           </div>
         </Link>

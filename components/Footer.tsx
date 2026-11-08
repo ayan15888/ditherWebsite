@@ -95,7 +95,7 @@ export default function Footer() {
                 <div className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
                   <span className="font-black text-base sm:text-lg text-neutral-900 tracking-tight">dither_animals</span>
                   <span className="px-2 py-0.5 rounded-full bg-white/95 text-orange-600 text-[10px] font-mono font-bold shadow-xs border border-orange-200/80">
-                    v2.0.2
+                    v2.1.0
                   </span>
                   <span className="font-handwritten text-orange-700 text-xs font-bold rotate-[-3deg] hidden sm:inline select-none">
                     ~handcrafted with love~

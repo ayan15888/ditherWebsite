@@ -1,8 +1,12 @@
 # 🐾 dither_animals Showcase Website
 
+[![Live Website](https://img.shields.io/badge/Live%20Website-ditheranimals.vercel.app-FF6B35.svg?style=flat&logo=vercel)](https://ditheranimals.vercel.app/)
+[![Flutter Package](https://img.shields.io/badge/pub.dev-v2.1.0-02569B?logo=dart)](https://pub.dev/packages/dither_animals)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 An interactive retro-aesthetic showcase website for the [`dither_animals`](https://pub.dev/packages/dither_animals) Flutter package.
 
-Live interactive Bayer matrix dot-dither playground, animated chibi mascots, interactive poke ripple physics, dot-matrix customization studio, and live Flutter code generator.
+👉 **Live Demo:** [https://ditheranimals.vercel.app/](https://ditheranimals.vercel.app/)
 
 ---
 
