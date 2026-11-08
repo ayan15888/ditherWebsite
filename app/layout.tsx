@@ -52,8 +52,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable} scroll-smooth`}>
-      <body className="min-h-screen bg-[#FBFBFB] text-neutral-900 font-sans antialiased selection:bg-orange-500 selection:text-white">
+    <html lang="en" className={`${sans.variable} ${mono.variable} scroll-smooth overflow-x-hidden`}>
+      <body className="min-h-screen bg-[#FBFBFB] text-neutral-900 font-sans antialiased selection:bg-orange-500 selection:text-white overflow-x-hidden">
         {children}
         <AgentationProvider />
       </body>

@@ -99,10 +99,10 @@ export default function AnimalsGallery() {
 
         </div>
 
-        {/* Filter and Search Bar (Soft pill design) */}
-        <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between mb-8 bg-white/70 backdrop-blur-md p-2 rounded-full border border-neutral-200/60 shadow-sm">
+        {/* Filter and Search Bar (Soft responsive design) */}
+        <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between mb-8 bg-white/70 backdrop-blur-md p-2.5 sm:p-2 rounded-2xl sm:rounded-full border border-neutral-200/60 shadow-sm">
           {/* Category Tabs */}
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1 sm:gap-1.5">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
@@ -111,7 +111,7 @@ export default function AnimalsGallery() {
                   setCategory(cat);
                 }}
                 onMouseEnter={() => sounds.playHover()}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                className={`px-3 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   category === cat
                     ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/20'
                     : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100/60'
@@ -122,15 +122,15 @@ export default function AnimalsGallery() {
             ))}
           </div>
 
-          {/* Search Input & Surprise Button with Hand-drawn Doodle Note */}
-          <div className="flex items-center gap-2 w-full md:w-auto">
+          {/* Search Input & Surprise Button */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
             <span className="hidden xl:inline font-handwritten text-orange-600 font-bold text-xs rotate-[-2deg] select-none">
               can&apos;t pick? roll one! ↷
             </span>
             <button
               onClick={pickSurprisePet}
               onMouseEnter={() => sounds.playHover()}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-semibold shadow-xs hover:shadow-md hover:scale-105 active:scale-95 transition-all shrink-0"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-semibold shadow-xs hover:shadow-md hover:scale-105 active:scale-95 transition-all shrink-0"
               title="Pick a random surprise pet & open generator!"
             >
               <Dices className="w-3.5 h-3.5" />
@@ -150,8 +150,8 @@ export default function AnimalsGallery() {
           </div>
         </div>
 
-        {/* The 50 Animal Cards Grid — 5 per row always */}
-        <div className="grid grid-cols-5 gap-5">
+        {/* The 50 Animal Cards Grid — 1 col on mobile, 2 on sm, 3 on md, 4 on lg, 5 on xl */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3.5 sm:gap-5">
           {filtered.map((animal) => {
             const isCopied = copiedId === animal.id;
             const isCardHovered = hoveredCardId === animal.id;
@@ -164,7 +164,7 @@ export default function AnimalsGallery() {
                   sounds.playHover();
                 }}
                 onMouseLeave={() => setHoveredCardId(null)}
-                className="group relative flex flex-col justify-between p-4 bg-white/90 rounded-[2rem] border border-orange-100/70 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_16px_36px_rgba(255,107,53,0.12)] hover:-translate-y-1.5 transition-all duration-300 cursor-pointer"
+                className="group relative flex flex-col justify-between p-3.5 sm:p-4 bg-white/90 rounded-3xl sm:rounded-[2rem] border border-orange-100/70 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_16px_36px_rgba(255,107,53,0.12)] hover:-translate-y-1.5 transition-all duration-300 cursor-pointer"
                 title={`Click to open Flutter Code Generator for ${animal.name}`}
               >
                 <div>

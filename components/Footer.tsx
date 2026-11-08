@@ -85,56 +85,56 @@ export default function Footer() {
         <div className="max-w-5xl mx-auto space-y-8 relative z-10">
           
           {/* Top Row: Brand & Quick Install Pill */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-white/60">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 pb-6 border-b border-white/60 text-center sm:text-left">
             {/* Brand & Tagline */}
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-white text-orange-600 font-mono font-bold text-xl flex items-center justify-center shadow-md shadow-orange-500/15 ring-2 ring-white/90">
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white text-orange-600 font-mono font-bold text-lg sm:text-xl flex items-center justify-center shadow-md shadow-orange-500/15 ring-2 ring-white/90 shrink-0">
                 🐾
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-black text-lg text-neutral-900 tracking-tight">dither_animals</span>
-                  <span className="px-2.5 py-0.5 rounded-full bg-white/95 text-orange-600 text-[10px] font-mono font-bold shadow-xs border border-orange-200/80">
+                <div className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
+                  <span className="font-black text-base sm:text-lg text-neutral-900 tracking-tight">dither_animals</span>
+                  <span className="px-2 py-0.5 rounded-full bg-white/95 text-orange-600 text-[10px] font-mono font-bold shadow-xs border border-orange-200/80">
                     v2.0.2
                   </span>
                   <span className="font-handwritten text-orange-700 text-xs font-bold rotate-[-3deg] hidden sm:inline select-none">
                     ~handcrafted with love~
                   </span>
                 </div>
-                <p className="text-xs text-neutral-800 font-semibold mt-0.5">
+                <p className="text-[11px] sm:text-xs text-neutral-800 font-semibold mt-0.5">
                   Handcrafted retro pixel companions for Flutter & the Web
                 </p>
               </div>
             </div>
 
             {/* Quick Install Pill */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-center">
               <button
                 onClick={copyInstall}
                 onMouseEnter={() => sounds.playHover()}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/95 hover:bg-white text-neutral-900 hover:text-orange-600 text-xs font-mono font-bold transition-all shadow-sm hover:shadow-md border border-white"
+                className="inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-white/95 hover:bg-white text-neutral-900 hover:text-orange-600 text-[11px] sm:text-xs font-mono font-bold transition-all shadow-sm hover:shadow-md border border-white max-w-full"
                 title="Copy install command"
               >
                 <span className="text-orange-600 font-bold">$</span>
-                <span>flutter pub add dither_animals</span>
+                <span className="truncate">flutter pub add dither_animals</span>
                 {copied ? (
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 ) : (
-                  <Copy className="w-3.5 h-3.5 text-neutral-500 group-hover:text-orange-500" />
+                  <Copy className="w-3.5 h-3.5 text-neutral-500 group-hover:text-orange-500 shrink-0" />
                 )}
               </button>
             </div>
           </div>
 
           {/* Middle Row: Floating Frosted Cloud Navigation Pills & Float to Top */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
             
             {/* Colorful Navigation Pills */}
-            <div className="flex flex-wrap items-center justify-center gap-2">
+            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
               <a
                 href="#gallery"
                 onMouseEnter={() => sounds.playHover()}
-                className="px-4 py-2 rounded-full bg-white/90 hover:bg-white text-neutral-900 font-bold text-xs transition-all shadow-xs hover:shadow-md hover:scale-105 border border-white/90"
+                className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 hover:bg-white text-neutral-900 font-bold text-[11px] sm:text-xs transition-all shadow-xs hover:shadow-md hover:scale-105 border border-white/90"
               >
                 🐾 50 Mascots
               </a>

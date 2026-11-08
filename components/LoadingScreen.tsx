@@ -21,7 +21,6 @@ interface BurstParticle {
 }
 
 const TOTAL_ANIMALS = ANIMALS.length; // 50 animals in library
-const VISIBLE_COUNT = 6; // Number of animals concurrently visible along the arc
 
 export default function LoadingScreen({
   isOpen = true,
@@ -31,6 +30,16 @@ export default function LoadingScreen({
   const [progress, setProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoStart);
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateSize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
 
   // Deterministic order (0..49) ensures 100% identical SSR & client hydration
   const [animalOrder, setAnimalOrder] = useState<number[]>(() =>
@@ -181,8 +190,13 @@ export default function LoadingScreen({
   // crest the summit at upper center (0vw, -6vh),
   // and descend to lower left (-36vw, +22vh) until 100%.
   const T = progress / 100;
-  const step = 1 / (TOTAL_ANIMALS + VISIBLE_COUNT - 1);
-  const L = VISIBLE_COUNT * step; // duration span each animal remains on screen
+  const visibleCount = isMobile ? 3 : 6;
+  const mascotSize = isMobile ? 54 : 80;
+  const cells = isMobile ? 24 : 32;
+  const xSpanVw = isMobile ? 38 : 36;
+
+  const step = 1 / (TOTAL_ANIMALS + visibleCount - 1);
+  const L = visibleCount * step; // duration span each animal remains on screen
 
   // Compute active animals currently traversing the visible arc (0 <= s <= 1)
   const activeAnimals: {
@@ -204,7 +218,7 @@ export default function LoadingScreen({
     if (T >= tEnter && T <= tExit) {
       const s = (T - tEnter) / L; // 0.0 at lower right, 0.5 at center summit, 1.0 at lower left
       const u = (0.5 - s) * 2; // +1.0 -> 0.0 -> -1.0
-      const xVw = u * 36;
+      const xVw = u * xSpanVw;
       const yVh = -6 + 28 * (u * u);
       const tiltDeg = u * 12; // leans forward up into climb, level at summit, forward down into descent
       const opacity = s < 0.06 ? s / 0.06 : s > 0.94 ? (1 - s) / 0.06 : 1;
@@ -251,7 +265,7 @@ export default function LoadingScreen({
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[480px] bg-gradient-to-r from-orange-200/20 via-amber-100/15 to-rose-200/15 blur-3xl pointer-events-none -z-10" />
 
       {/* Top-Right Controls: Sound, Shuffle Parade Order, Skip */}
-      <div className="absolute top-5 right-5 sm:top-7 sm:right-8 z-30 flex items-center gap-2">
+      <div className="absolute top-3 right-3 sm:top-7 sm:right-8 z-30 flex items-center gap-1.5 sm:gap-2">
         {/* Sound toggle */}
         <button
           onClick={() => {
@@ -259,7 +273,7 @@ export default function LoadingScreen({
             setSoundEnabled(next);
           }}
           onMouseEnter={() => sounds.playHover()}
-          className="p-2 rounded-full bg-white/80 hover:bg-white text-neutral-400 hover:text-neutral-700 transition-all shadow-xs"
+          className="p-1.5 sm:p-2 rounded-full bg-white/80 hover:bg-white text-neutral-400 hover:text-neutral-700 transition-all shadow-xs"
           title={soundEnabled ? 'Mute' : 'Unmute (8-bit Sound FX)'}
         >
           {soundEnabled ? (
@@ -273,7 +287,7 @@ export default function LoadingScreen({
         <button
           onClick={handleShuffleQueue}
           onMouseEnter={() => sounds.playHover()}
-          className="p-2 rounded-full bg-white/80 hover:bg-white text-neutral-400 hover:text-orange-600 transition-all shadow-xs"
+          className="p-1.5 sm:p-2 rounded-full bg-white/80 hover:bg-white text-neutral-400 hover:text-orange-600 transition-all shadow-xs"
           title="Shuffle Parade Order"
         >
           <Shuffle className="w-4 h-4" />
@@ -283,7 +297,7 @@ export default function LoadingScreen({
         <button
           onClick={handleDismiss}
           onMouseEnter={() => sounds.playHover()}
-          className="p-2 rounded-full bg-white/80 hover:bg-white text-neutral-400 hover:text-neutral-700 transition-all shadow-xs"
+          className="p-1.5 sm:p-2 rounded-full bg-white/80 hover:bg-white text-neutral-400 hover:text-neutral-700 transition-all shadow-xs"
           title="Skip to Website"
         >
           <X className="w-4 h-4" />
@@ -291,18 +305,18 @@ export default function LoadingScreen({
       </div>
 
       {/* Clean Retro Center Percentage & Realtime Parade Counter (Lower Center) */}
-      <div className="relative z-10 flex flex-col items-center justify-center select-none pointer-events-none translate-y-16 sm:translate-y-20">
-        <div className="font-mono text-7xl sm:text-8xl md:text-9xl font-black tracking-tight text-neutral-900/90 flex items-baseline">
+      <div className="relative z-10 flex flex-col items-center justify-center select-none pointer-events-none translate-y-12 sm:translate-y-20 px-4 text-center">
+        <div className="font-mono text-6xl sm:text-8xl md:text-9xl font-black tracking-tight text-neutral-900/90 flex items-baseline justify-center">
           <span>{Math.round(progress)}</span>
-          <span className="text-3xl sm:text-4xl md:text-5xl text-orange-500 font-extrabold ml-1.5">
+          <span className="text-2xl sm:text-4xl md:text-5xl text-orange-500 font-extrabold ml-1.5">
             %
           </span>
         </div>
 
-        <div className="mt-2 text-xs sm:text-sm font-mono text-neutral-500 flex items-center gap-2">
+        <div className="mt-2 text-[11px] sm:text-sm font-mono text-neutral-500 flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap">
           <span className="inline-block w-2 h-2 rounded-full bg-orange-500 animate-ping" />
           <span>
-            Pet {currentLeaderQueueIdx + 1} of {TOTAL_ANIMALS} in parade:
+            Pet {currentLeaderQueueIdx + 1} of {TOTAL_ANIMALS}:
           </span>
           <span className="text-neutral-900 font-bold flex items-center gap-1">
             <span>{currentLeader?.emoji}</span>
@@ -367,8 +381,8 @@ export default function LoadingScreen({
                 >
                   <DitherCanvas
                     animalId={item.animal.id}
-                    size={80}
-                    cells={32}
+                    size={mascotSize}
+                    cells={cells}
                     dotShape="square"
                     color={item.animal.color}
                     interactive={false}
@@ -382,10 +396,10 @@ export default function LoadingScreen({
               <button
                 onClick={() => pokeAnimal(item.animal.id)}
                 onMouseEnter={() => sounds.playHover()}
-                className="mt-1 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/95 text-[10px] font-mono font-semibold text-neutral-800 shadow-xs hover:bg-orange-50 cursor-pointer transition-all hover:scale-105 active:scale-95 border border-neutral-200/60"
+                className="mt-0.5 sm:mt-1 flex items-center gap-1 px-2 sm:px-2.5 py-0.5 rounded-full bg-white/95 text-[9px] sm:text-[10px] font-mono font-semibold text-neutral-800 shadow-xs hover:bg-orange-50 cursor-pointer transition-all hover:scale-105 active:scale-95 border border-neutral-200/60"
                 title={`Click to poke ${item.animal.name}!`}
               >
-                <span className="text-xs">{item.animal.emoji}</span>
+                <span className="text-[11px] sm:text-xs">{item.animal.emoji}</span>
                 <span>{item.animal.name}</span>
               </button>
 
@@ -393,7 +407,7 @@ export default function LoadingScreen({
               <div
                 className="mt-0.5 h-1.5 bg-orange-950/20 rounded-full blur-[2px] pointer-events-none transition-all duration-150"
                 style={{
-                  width: `${80 * 0.5 * item.shadowScale}px`,
+                  width: `${mascotSize * 0.5 * item.shadowScale}px`,
                   opacity: item.shadowOpacity,
                 }}
               />
@@ -407,19 +421,25 @@ export default function LoadingScreen({
         <button
           onClick={handleReplay}
           onMouseEnter={() => sounds.playHover()}
-          className="absolute bottom-8 z-30 flex items-center gap-2 px-4 py-2 rounded-full bg-white/95 hover:bg-white text-orange-600 font-mono text-xs font-semibold hover:scale-105 transition-all shadow-sm border border-neutral-200 cursor-pointer"
+          className="absolute bottom-6 sm:bottom-8 z-30 flex items-center gap-2 px-4 py-2 rounded-full bg-white/95 hover:bg-white text-orange-600 font-mono text-xs font-semibold hover:scale-105 transition-all shadow-sm border border-neutral-200 cursor-pointer"
           title="Replay 50 Mascot Parade"
         >
           <RotateCcw className="w-4 h-4" />
           <span>Replay 50 Mascot Parade</span>
         </button>
       ) : (
-        <div className="absolute bottom-6 z-20 text-[11px] text-neutral-400 font-mono flex items-center gap-2 select-none pointer-events-none">
-          <span>[Space] Pause</span>
-          <span>•</span>
-          <span>[Esc] Skip</span>
-          <span>•</span>
-          <span>Click any marching pet to poke</span>
+        <div className="absolute bottom-4 sm:bottom-6 z-20 text-[10px] sm:text-[11px] text-neutral-400 font-mono flex items-center justify-center gap-2 select-none pointer-events-none px-4 text-center">
+          {isMobile ? (
+            <span>Tap any pet to poke • Tap [X] to skip</span>
+          ) : (
+            <>
+              <span>[Space] Pause</span>
+              <span>•</span>
+              <span>[Esc] Skip</span>
+              <span>•</span>
+              <span>Click any marching pet to poke</span>
+            </>
+          )}
         </div>
       )}
     </div>

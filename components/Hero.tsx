@@ -69,18 +69,18 @@ export default function Hero({ onOpenLoading }: HeroProps = {}) {
   };
 
   return (
-    <section className="relative overflow-hidden pt-10 pb-16 md:pt-16 md:pb-24">
+    <section className="relative overflow-hidden pt-6 pb-12 sm:pt-10 sm:pb-16 md:pt-16 md:pb-24">
       {/* Soft ambient colorful blur circles */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[340px] bg-gradient-to-tr from-orange-200/40 via-amber-100/30 to-rose-100/30 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Left Column: Cute & Minimalist Typography */}
-          <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
+          <div className="lg:col-span-6 space-y-4 sm:space-y-6 text-center lg:text-left">
             
             {/* Hand-drawn style Pill Badge */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-50/80 border border-amber-200/80 shadow-2xs text-xs text-amber-900 font-medium rotate-[-1deg]">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50/80 border border-amber-200/80 shadow-2xs text-xs text-amber-900 font-medium rotate-[-1deg]">
               <span className="text-amber-500">✏️</span>
               <span>Handcrafted Flutter package</span>
               <span className="text-neutral-300">•</span>
@@ -88,7 +88,7 @@ export default function Hero({ onOpenLoading }: HeroProps = {}) {
             </div>
 
             {/* Friendly Headline with Hand-drawn Squiggly Underline */}
-            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-neutral-900 leading-[1.14]">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-900 leading-[1.14]">
               Cute pixel pets, <br />
               <span className="relative inline-block">
                 <span className="bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 bg-clip-text text-transparent">
@@ -110,7 +110,7 @@ export default function Hero({ onOpenLoading }: HeroProps = {}) {
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-neutral-600 leading-relaxed max-w-xl mx-auto lg:mx-0 font-normal">
+            <p className="text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed max-w-xl mx-auto lg:mx-0 font-normal">
               Authentic <span className="marker-highlight font-medium text-neutral-900">8×8 Bayer matrix</span> stipples, editable color themes, gentle breathing, and signature special moves. Drop into any Flutter app.
             </p>
 
@@ -118,17 +118,17 @@ export default function Hero({ onOpenLoading }: HeroProps = {}) {
             <div className="pt-2 flex justify-center lg:justify-start">
               <div
                 onClick={copyCmd}
-                className="group flex items-center justify-between sm:justify-start gap-4 px-6 py-4 bg-white/95 hover:bg-orange-50/40 border-2 border-orange-200/80 hover:border-orange-400 rounded-2xl font-mono text-sm sm:text-base text-neutral-800 cursor-pointer shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full sm:w-auto"
+                className="group flex items-center justify-between gap-3 px-3.5 sm:px-6 py-3 sm:py-4 bg-white/95 hover:bg-orange-50/40 border-2 border-orange-200/80 hover:border-orange-400 rounded-2xl font-mono text-xs sm:text-sm md:text-base text-neutral-800 cursor-pointer shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full sm:w-auto max-w-full overflow-hidden"
                 title="Click to copy pub add command"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center border border-orange-200/70 shadow-2xs group-hover:scale-110 transition-transform">
+                <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center border border-orange-200/70 shadow-2xs group-hover:scale-110 transition-transform shrink-0">
                     <Terminal className="w-4 h-4 text-orange-600" />
                   </div>
-                  <span className="font-semibold tracking-tight text-neutral-900">flutter pub add dither_animals</span>
+                  <span className="font-semibold tracking-tight text-neutral-900 truncate">flutter pub add dither_animals</span>
                 </div>
                 
-                <div className="flex items-center gap-2 pl-3 border-l border-neutral-200 text-neutral-400 group-hover:text-orange-600">
+                <div className="flex items-center gap-1.5 sm:gap-2 pl-2 sm:pl-3 border-l border-neutral-200 text-neutral-400 group-hover:text-orange-600 shrink-0">
                   {copied ? (
                     <span className="flex items-center gap-1.5 text-xs font-sans font-bold text-emerald-600 animate-pulse">
                       <Check className="w-4 h-4 text-emerald-600" />
@@ -146,7 +146,7 @@ export default function Hero({ onOpenLoading }: HeroProps = {}) {
           </div>
 
           {/* Right Column: Interactive Pet Preview Card */}
-          <div className="lg:col-span-6 flex flex-col items-center relative">
+          <div className="lg:col-span-6 flex flex-col items-center relative w-full">
             {/* Hand-drawn Doodle Annotation Arrow */}
             <div className="hidden sm:flex items-center gap-1.5 absolute -top-8 -left-6 z-20 text-neutral-600 select-none pointer-events-none rotate-[-4deg]">
               <span className="font-handwritten text-base text-orange-600 font-bold">click me!</span>
@@ -156,13 +156,13 @@ export default function Hero({ onOpenLoading }: HeroProps = {}) {
               </svg>
             </div>
 
-            <div className="relative w-full max-w-md p-6 sm:p-7 rounded-[3rem] washi-tape bg-gradient-to-b from-white/95 to-orange-50/40 border-2 border-orange-100/90 shadow-[0_25px_60px_-10px_rgba(255,107,53,0.12)] transition-all">
+            <div className="relative w-full max-w-md p-4 sm:p-7 rounded-3xl sm:rounded-[3rem] washi-tape bg-gradient-to-b from-white/95 to-orange-50/40 border-2 border-orange-100/90 shadow-[0_25px_60px_-10px_rgba(255,107,53,0.12)] transition-all">
               
               {/* Mascot Screen Display (Random character loaded on every visit/roll) */}
               <div
                 onMouseEnter={() => setIsHeroHovered(true)}
                 onMouseLeave={() => setIsHeroHovered(false)}
-                className="relative flex justify-center items-center py-6 my-1 rounded-[2.5rem] bg-gradient-to-b from-orange-50/60 to-amber-50/30 border border-orange-100/70 overflow-hidden cursor-pointer group shadow-inner"
+                className="relative flex justify-center items-center py-4 sm:py-6 my-1 rounded-2xl sm:rounded-[2.5rem] bg-gradient-to-b from-orange-50/60 to-amber-50/30 border border-orange-100/70 overflow-hidden cursor-pointer group shadow-inner"
               >
                 {/* Pet Name & Poke Badge */}
                 <div className="absolute top-3 left-4 text-[10px] font-mono font-semibold text-orange-600 bg-white/95 border border-orange-100 px-2.5 py-0.5 rounded-full shadow-xs select-none flex items-center gap-1">
@@ -344,7 +344,7 @@ export default function Hero({ onOpenLoading }: HeroProps = {}) {
                     <span className="text-[11px]">Dot Matrix Geometry:</span>
                     <span className="text-neutral-900 capitalize font-semibold">{dotShape}</span>
                   </div>
-                  <div className="grid grid-cols-4 gap-1.5 p-1 bg-white/80 rounded-full border border-orange-100/70 shadow-2xs">
+                  <div className="grid grid-cols-4 gap-1 sm:gap-1.5 p-1 bg-white/80 rounded-full border border-orange-100/70 shadow-2xs">
                     {(['square', 'round', 'hex', 'diamond'] as const).map((shape) => (
                       <button
                         key={shape}
@@ -352,7 +352,7 @@ export default function Hero({ onOpenLoading }: HeroProps = {}) {
                           sounds.playClick();
                           setDotShape(shape);
                         }}
-                        className={`py-1 rounded-full text-xs capitalize transition-all font-medium ${
+                        className={`py-1 px-0.5 sm:px-2 rounded-full text-[10px] sm:text-xs capitalize transition-all font-medium ${
                           dotShape === shape
                             ? 'bg-neutral-900 text-white shadow-xs'
                             : 'text-neutral-600 hover:text-neutral-900'

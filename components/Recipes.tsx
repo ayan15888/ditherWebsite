@@ -181,8 +181,8 @@ Stack(
           </p>
         </div>
 
-        {/* 2x2 Floating Organic Pods Grid (Non-boxy) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Responsive Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {recipes.map((r, idx) => {
             const isCopied = copiedIdx === idx;
             const isCardHovered = hoveredIdx === idx;
@@ -191,17 +191,17 @@ Stack(
                 key={r.title}
                 onMouseEnter={() => setHoveredIdx(idx)}
                 onMouseLeave={() => setHoveredIdx(null)}
-                className="bg-white/90 border border-orange-100/70 rounded-[2.5rem] p-7 shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(255,107,53,0.06)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between washi-tape"
+                className="bg-white/90 border border-orange-100/70 rounded-3xl sm:rounded-[2.5rem] p-4 sm:p-7 shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(255,107,53,0.06)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between washi-tape"
               >
                 <div>
                   {/* Top Bar */}
-                  <div className="flex items-center justify-between pb-3.5 mb-3.5 border-b border-neutral-100 font-mono text-xs">
-                    <span className="text-[11px] text-orange-600 font-semibold px-3 py-0.5 rounded-full bg-orange-50 border border-orange-100/60">
+                  <div className="flex items-center justify-between pb-3 mb-3 border-b border-neutral-100 font-mono text-xs">
+                    <span className="text-[10px] sm:text-[11px] text-orange-600 font-semibold px-2.5 sm:px-3 py-0.5 rounded-full bg-orange-50 border border-orange-100/60">
                       {r.tag}
                     </span>
                     <button
                       onClick={() => copyCode(r.code, idx)}
-                      className={`inline-flex items-center gap-1.5 px-3.5 py-1 text-xs font-semibold rounded-full border transition-all ${
+                      className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full border transition-all ${
                         isCopied
                           ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                           : 'bg-neutral-50 text-neutral-600 border-neutral-200/60 hover:bg-orange-50 hover:text-orange-600'
@@ -213,11 +213,11 @@ Stack(
                   </div>
 
                   {/* Header & Description with mini live preview */}
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-20 h-20 shrink-0 bg-gradient-to-b from-orange-50/60 to-transparent rounded-2xl flex items-center justify-center p-1 border border-orange-100/50">
+                  <div className="flex items-start gap-3 sm:gap-4 mb-4">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 bg-gradient-to-b from-orange-50/60 to-transparent rounded-2xl flex items-center justify-center p-1 border border-orange-100/50">
                       <DitherCanvas
                         animalId={r.animalId}
-                        size={72}
+                        size={64}
                         cells={48}
                         color={r.color}
                         interactive={true}
@@ -228,7 +228,7 @@ Stack(
                       />
                     </div>
                     <div>
-                      <h3 className="font-bold text-base text-neutral-900">
+                      <h3 className="font-bold text-sm sm:text-base text-neutral-900">
                         {r.title}
                       </h3>
                       <p className="text-xs text-neutral-500 mt-1 leading-relaxed">
@@ -238,7 +238,7 @@ Stack(
                   </div>
 
                   {/* Code Block */}
-                  <pre className="p-4 bg-neutral-900 rounded-[1.5rem] font-mono text-xs text-neutral-200 overflow-x-auto leading-relaxed shadow-sm">
+                  <pre className="p-3 sm:p-4 bg-neutral-900 rounded-2xl sm:rounded-[1.5rem] font-mono text-[11px] sm:text-xs text-neutral-200 overflow-x-auto leading-relaxed shadow-sm">
                     <code>{r.code}</code>
                   </pre>
                 </div>

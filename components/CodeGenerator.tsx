@@ -173,40 +173,40 @@ Widget mascot = SizedBox(
     >
       {/* Modal Dialog Window */}
       <div
-        className="relative w-[96vw] max-w-6xl max-h-[92vh] bg-[#FCFAF7] rounded-[2.25rem] border border-orange-100/90 shadow-[0_25px_80px_rgba(0,0,0,0.22)] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-6xl max-h-[94vh] bg-[#FCFAF7] rounded-3xl sm:rounded-[2.25rem] border border-orange-100/90 shadow-[0_25px_80px_rgba(0,0,0,0.22)] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Sleek Minimal Header */}
-        <div className="flex items-center justify-between px-6 sm:px-8 py-3.5 bg-white/90 border-b border-orange-100/70 backdrop-blur-md shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-orange-50 border border-orange-200/60 flex items-center justify-center text-2xl shadow-xs">
+        {/* Sleek Responsive Header */}
+        <div className="flex items-center justify-between px-4 sm:px-8 py-3 sm:py-3.5 bg-white/90 border-b border-orange-100/70 backdrop-blur-md shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-orange-50 border border-orange-200/60 flex items-center justify-center text-xl sm:text-2xl shadow-xs">
               {currentAnimal.emoji}
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-extrabold text-base sm:text-lg text-neutral-900 tracking-tight">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <h3 className="font-extrabold text-sm sm:text-lg text-neutral-900 tracking-tight">
                   {currentAnimal.name}
                 </h3>
-                <span className="px-2.5 py-0.5 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 font-mono text-[11px] font-semibold">
+                <span className="px-2 py-0.5 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 font-mono text-[10px] sm:text-[11px] font-semibold">
                   {currentAnimal.category}
                 </span>
               </div>
-              <p className="text-xs text-neutral-400">Flutter Mascot Generator</p>
+              <p className="text-[11px] sm:text-xs text-neutral-400">Flutter Mascot Generator</p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-500 hover:text-neutral-900 flex items-center justify-center transition-all shadow-xs"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-500 hover:text-neutral-900 flex items-center justify-center transition-all shadow-xs"
             aria-label="Close modal"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Modal Body: 3 Balanced Columns */}
-        <div className="p-5 sm:p-7 overflow-y-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        {/* Modal Body: Responsive Layout */}
+        <div className="p-3.5 sm:p-7 overflow-y-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-stretch">
             
             {/* COLUMN 1: MASCOT PREVIEW */}
             <div className="lg:col-span-4 flex flex-col space-y-3.5">

@@ -524,6 +524,7 @@ export default function DitherCanvas({
         width={size}
         height={size}
         onPointerDown={handlePointerDown}
+        style={{ maxWidth: '100%', height: 'auto' }}
         className={`touch-none ${interactive ? 'cursor-pointer transition-transform active:scale-95' : ''}`}
         title={interactive ? `Click to poke ${animalId}!` : animalId}
       />

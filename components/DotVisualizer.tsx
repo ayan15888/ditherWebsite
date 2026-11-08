@@ -82,11 +82,11 @@ export default function DotVisualizer() {
           </p>
         </div>
 
-        {/* Floating Organic Stage (Non-boxy) */}
-        <div className="p-6 sm:p-10 rounded-[3rem] bg-white/90 border border-orange-100/70 shadow-[0_20px_50px_-10px_rgba(255,107,53,0.06)] grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        {/* Floating Organic Stage (Responsive) */}
+        <div className="p-4 sm:p-8 lg:p-10 rounded-3xl sm:rounded-[3rem] bg-white/90 border border-orange-100/70 shadow-[0_20px_50px_-10px_rgba(255,107,53,0.06)] grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           
           {/* Controls Column */}
-          <div className="lg:col-span-6 space-y-6">
+          <div className="lg:col-span-6 space-y-5 sm:space-y-6">
             
             {/* Dot Shape Selector */}
             <div>
@@ -94,7 +94,7 @@ export default function DotVisualizer() {
                 <span>Choose Dot Geometry:</span>
                 <span className="text-orange-600 capitalize font-semibold">{activeShape}</span>
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {shapes.map((s) => (
                   <button
                     key={s.id}
@@ -102,13 +102,13 @@ export default function DotVisualizer() {
                       sounds.playClick();
                       setActiveShape(s.id);
                     }}
-                    className={`flex items-start gap-2.5 p-3 rounded-2xl text-left border transition-all ${
+                    className={`flex items-start gap-2.5 p-2.5 sm:p-3 rounded-2xl text-left border transition-all ${
                       activeShape === s.id
                         ? 'bg-neutral-900 text-white border-neutral-900 shadow-sm'
                         : 'bg-neutral-50/80 text-neutral-700 border-neutral-200/60 hover:bg-orange-50/50 hover:border-orange-200/60'
                     }`}
                   >
-                    <span className="text-lg leading-none mt-0.5">{s.icon}</span>
+                    <span className="text-base sm:text-lg leading-none mt-0.5">{s.icon}</span>
                     <div>
                       <div className="text-xs font-bold">{s.name}</div>
                       <div className={`text-[10px] font-mono ${activeShape === s.id ? 'text-neutral-300' : 'text-neutral-400'}`}>
@@ -207,15 +207,15 @@ export default function DotVisualizer() {
             <div
               onMouseEnter={() => setIsInspectorHovered(true)}
               onMouseLeave={() => setIsInspectorHovered(false)}
-              className="relative w-full max-w-sm flex items-center justify-center p-8 rounded-[2.5rem] bg-gradient-to-b from-orange-50/50 via-amber-50/30 to-transparent border border-orange-100/60 cursor-pointer group shadow-xs"
+              className="relative w-full max-w-sm flex items-center justify-center p-4 sm:p-8 rounded-2xl sm:rounded-[2.5rem] bg-gradient-to-b from-orange-50/50 via-amber-50/30 to-transparent border border-orange-100/60 cursor-pointer group shadow-xs"
             >
-              <div className="absolute top-4 right-4 text-[10px] font-mono text-neutral-500 bg-white/90 border border-neutral-100 px-3 py-0.5 rounded-full shadow-sm">
+              <div className="absolute top-3 sm:top-4 right-3 sm:right-4 text-[10px] font-mono text-neutral-500 bg-white/90 border border-neutral-100 px-2.5 sm:px-3 py-0.5 rounded-full shadow-sm">
                 {isInspectorHovered ? 'Active motion' : 'Hover to wake'}
               </div>
 
               <DitherCanvas
                 animalId={sampleAnimal}
-                size={230}
+                size={210}
                 cells={cells}
                 dotShape={activeShape}
                 color="#FF6B35"
@@ -230,7 +230,7 @@ export default function DotVisualizer() {
 
             {/* Creative 8x8 Bayer Matrix Math View */}
             {showMatrix && (
-              <div className="w-full max-w-sm p-4 bg-white rounded-3xl border border-indigo-100 shadow-md animate-in fade-in zoom-in-95 duration-200 space-y-2.5">
+              <div className="w-full max-w-sm p-3.5 sm:p-4 bg-white rounded-2xl sm:rounded-3xl border border-indigo-100 shadow-md animate-in fade-in zoom-in-95 duration-200 space-y-2.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-bold text-neutral-800">8×8 Bayer Threshold Matrix</span>
                   <span className="text-[10px] font-mono text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">
@@ -239,13 +239,13 @@ export default function DotVisualizer() {
                 </div>
 
                 {/* The 8x8 Grid */}
-                <div className="grid grid-cols-8 gap-1 p-2 bg-neutral-900 rounded-2xl font-mono text-[9px] text-center select-none">
+                <div className="grid grid-cols-8 gap-0.5 sm:gap-1 p-1.5 sm:p-2 bg-neutral-900 rounded-xl sm:rounded-2xl font-mono text-[8px] sm:text-[9px] text-center select-none">
                   {BAYER_8X8.map((row, r) =>
                     row.map((val, c) => (
                       <div
                         key={`${r}-${c}`}
                         onMouseEnter={() => setHoveredMatrixCell({ r, c, v: val })}
-                        className="py-1 rounded bg-neutral-800 hover:bg-orange-500 text-neutral-300 hover:text-white transition-colors cursor-pointer"
+                        className="py-0.5 sm:py-1 rounded bg-neutral-800 hover:bg-orange-500 text-neutral-300 hover:text-white transition-colors cursor-pointer"
                         title={`Threshold: ${val}/64`}
                       >
                         {val}
